@@ -1,0 +1,23 @@
+from telethon import TelegramClient, events
+
+api_id = '26571067'  # Ganti dengan API ID kamu
+api_hash = '75616f6d77b6768c012db3b4a9b0b08d'  # Ganti dengan API Hash kamu
+
+client = TelegramClient('session_name', api_id, api_hash)
+
+@client.on(events.NewMessage)
+async def handler(event):
+    if event.is_group:
+        group_id = event.chat_id
+        group_name = (await event.get_chat()).title
+        print(f"Grup: {group_name} | ID: {group_id}")
+
+async def main():
+    await client.start()
+    print("Bot siap! Kirim pesan dari grup yang ingin kamu cek ID-nya.")
+
+    await client.run_until_disconnected()
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())
